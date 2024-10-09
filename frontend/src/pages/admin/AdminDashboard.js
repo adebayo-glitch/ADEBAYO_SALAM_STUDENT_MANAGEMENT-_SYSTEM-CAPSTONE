@@ -17,7 +17,6 @@ import SideBar from './SideBar';
 import AdminHomePage from './AdminHomePage';
 
 import AddStudent from './studentRelated/AddStudent';
-import SeeComplains from './studentRelated/SeeComplains';
 import ShowStudents from './studentRelated/ShowStudents';
 import StudentAttendance from './studentRelated/StudentAttendance';
 import StudentExamMarks from './studentRelated/StudentExamMarks';
@@ -94,8 +93,7 @@ const AdminDashboard = () => {
                         <Route path="/" element={<AdminHomePage />} />
                         <Route path='*' element={<Navigate to="/" />} />
                         <Route path="/Admin/dashboard" element={<AdminHomePage />} />
-                        {/* <Route path="/Admin/profile" element={<AdminProfile />} /> */}
-                        <Route path="/Admin/complains" element={<SeeComplains />} />
+                        
 
                         {/* Notice */}
                         <Route path="/Admin/addnotice" element={<AddNotice />} />
