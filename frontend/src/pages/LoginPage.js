@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import bgpic from "../assets/designlogin.jpg";
+import admin from "../../assets/admin.jpg"
 import Popup from '../components/Popup';
 import { LightPurpleButton } from '../components/buttonStyles';
 import { loginUser } from '../redux/userRelated/userHandle';
@@ -261,10 +261,8 @@ const LoginPage = ({ role }) => {
                     sm={4}
                     md={7}
                     sx={{
-                        backgroundImage: `url(${bgpic})`,
+                        backgroundImage: `url(${admin})`,
                         backgroundRepeat: 'no-repeat',
-                        backgroundColor: (t) =>
-                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
