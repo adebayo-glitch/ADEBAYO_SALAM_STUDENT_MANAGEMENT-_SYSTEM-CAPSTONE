@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import admin from "../../assets/admin.jpg"
+import admin from "../assets/admin.jpg"
 import Popup from '../components/Popup';
 import { LightPurpleButton } from '../components/buttonStyles';
 import { loginUser } from '../redux/userRelated/userHandle';

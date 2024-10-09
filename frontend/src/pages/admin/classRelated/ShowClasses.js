@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteUser } from '../../../redux/userRelated/userHandle';
-import { getAllSclasses } from '../../../redux/sclassRelated/sclassHandle';
+import { getAllSclasses, deleteClass } from '../../../redux/sclassRelated/sclassHandle';
 import { BlueButton, GreenButton, IndigoButton } from '../../../components/buttonStyles';
 import TableTemplate from '../../../components/TableTemplate';
 
@@ -36,16 +36,16 @@ const ShowClasses = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [message, setMessage] = useState("");
 
-  // const deleteHandler = (deleteID, address) => {
-  //   console.log(deleteID);
-  //   console.log(address);
-  //   setMessage("Sorry the delete function has been disabled for now.")
-  //   setShowPopup(true)
-  //   // dispatch(deleteUser(deleteID, address))
-  //   //   .then(() => {
-  //   //     dispatch(getAllSclasses(adminID, "Sclass"));
-  //   //   })
-  // }
+  const deleteHandler = (deleteID, address) => {
+    console.log(deleteID);
+    console.log(address);
+    // setMessage("Sorry the delete function has been disabled for now.")
+    // setShowPopup(true)
+    dispatch(deleteClass(deleteID, address))
+      .then(() => {
+        dispatch(getAllSclasses(adminID, "Sclass"));
+      })
+  }
 
   const sclassColumns = [
     { id: 'name', label: 'Class Name', minWidth: 170 },
@@ -65,13 +65,14 @@ const ShowClasses = () => {
     ];
     return (
       <ButtonContainer>
-        {/* <IconButton onClick={() => deleteHandler(row.id, "Sclass")} color="secondary">
-          <DeleteIcon color="error" />
-        </IconButton> */}
+       
         <BlueButton variant="contained"
           onClick={() => navigate("/Admin/classes/class/" + row.id)}>
           View
         </BlueButton>
+         <IconButton onClick={() => deleteHandler(row.id, "Sclass")} color="secondary">
+          <DeleteIcon color="error" />
+        </IconButton>
         <ActionMenu actions={actions} />
       </ButtonContainer>
     );

@@ -72,34 +72,28 @@ const getSclassStudents = async (req, res) => {
 }
 
 const deleteSclass = async (req, res) => {
+    const { id } = req.params;
+  
     try {
-        const deletedClass = await Sclass.findByIdAndDelete(req.params.id);
-        if (!deletedClass) {
-            return res.send({ message: "Class not found" });
-        }
-        const deletedStudents = await Student.deleteMany({ sclassName: req.params.id });
-        const deletedSubjects = await Subject.deleteMany({ sclassName: req.params.id });
-        const deletedTeachers = await Teacher.deleteMany({ teachSclass: req.params.id });
-        res.send(deletedClass);
+      const deletedClass = await Sclass.findByIdAndDelete(id);
+  
+      if (!deletedClass) {
+        return res.status(404).json({ message: "Class not found" });
+      }
+  
+      await Promise.all([
+        Student.deleteMany({ sclassName: id }),
+        Subject.deleteMany({ sclassName: id }),
+        Teacher.deleteMany({ teachSclass: id })
+      ]);
+  
+      res.status(200).json({ message: "Class and related data deleted successfully", deletedClass });
     } catch (error) {
-        res.status(500).json(error);
+      console.error('Error deleting class:', error);
+      res.status(500).json({ message: "An error occurred while deleting the class", error: error.message });
     }
-}
-
-const deleteSclasses = async (req, res) => {
-    try {
-        const deletedClasses = await Sclass.deleteMany({ school: req.params.id });
-        if (deletedClasses.deletedCount === 0) {
-            return res.send({ message: "No classes found to delete" });
-        }
-        const deletedStudents = await Student.deleteMany({ school: req.params.id });
-        const deletedSubjects = await Subject.deleteMany({ school: req.params.id });
-        const deletedTeachers = await Teacher.deleteMany({ school: req.params.id });
-        res.send(deletedClasses);
-    } catch (error) {
-        res.status(500).json(error);
-    }
-}
+  };
 
 
-module.exports = { sclassCreate, sclassList, deleteSclass, deleteSclasses, getSclassDetail, getSclassStudents };
+
+module.exports = { sclassCreate, sclassList, deleteSclass, getSclassDetail, getSclassStudents };

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { getAllStudents } from '../../../redux/studentRelated/studentHandle';
+import { getAllStudents, deleteStudent } from '../../../redux/studentRelated/studentHandle';
 import { deleteUser } from '../../../redux/userRelated/userHandle';
 import {
     Paper, Box, IconButton
@@ -42,17 +42,12 @@ const ShowStudents = () => {
     const [showPopup, setShowPopup] = React.useState(false);
     const [message, setMessage] = React.useState("");
 
-    // const deleteHandler = (deleteID, address) => {
-    //     console.log(deleteID);
-    //     console.log(address);
-    //     setMessage("Sorry the delete function has been disabled for now.")
-    //     setShowPopup(true)
-
-    //     // dispatch(deleteUser(deleteID, address))
-    //     //     .then(() => {
-    //     //         dispatch(getAllStudents(currentUser._id));
-    //     //     })
-    // }
+    const deleteHandler = (deleteID, address) => {
+        dispatch(deleteStudent(deleteID, address))
+            .then(() => {
+                dispatch(getAllStudents(currentUser._id));
+            })
+    }
 
     const studentColumns = [
         { id: 'name', label: 'Name', minWidth: 170 },
@@ -110,13 +105,14 @@ const ShowStudents = () => {
         };
         return (
             <>
-                {/* <IconButton onClick={() => deleteHandler(row.id, "Student")}>
-                    <PersonRemoveIcon color="error" />
-                </IconButton> */}
+            
                 <BlueButton variant="contained"
                     onClick={() => navigate("/Admin/students/student/" + row.id)}>
                     View
                 </BlueButton>
+                <IconButton onClick={() => deleteHandler(row.id, "Student")}>
+                    <PersonRemoveIcon color="error" />
+                </IconButton>
                 <React.Fragment>
                     <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
                         <Button onClick={handleClick}>{options[selectedIndex]}</Button>
